@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KaizenTechCaseStudy.Entities\KaizenTechCaseStudy.Entities.csproj" />
+    <ProjectReference Include="..\KaizenTechCaseStudy.Mappings\KaizenTechCaseStudy.Mappings.csproj" />
   </ItemGroup>
 
 </Project>

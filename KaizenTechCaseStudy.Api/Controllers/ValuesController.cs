@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KaizenTechCaseStudy.Dal.Manager.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KaizenTechCaseStudy.Api.Controllers
@@ -10,36 +7,15 @@ namespace KaizenTechCaseStudy.Api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            using (var context = new DatabaseContext())
+            {
+                //Creates the database if not exists
+                context.Database.EnsureCreated();
+            }
+            return Ok();
         }
     }
 }

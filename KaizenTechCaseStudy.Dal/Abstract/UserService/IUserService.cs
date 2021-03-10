@@ -5,9 +5,9 @@ namespace KaizenTechCaseStudy.Dal.Abstract.UserService
 {
     public interface IUserService
     {
-        bool AddNewUser(Users user);
+        bool AddNewUser(Users user, UserPassword userPassword);
 
-        bool UpdateUser(Users user);
+        bool UpdateUser(Users user, UserPassword userPassword);
 
         bool DeleteUser(int userId);
 

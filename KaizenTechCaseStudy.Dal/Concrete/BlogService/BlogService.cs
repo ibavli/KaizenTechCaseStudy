@@ -1,23 +1,22 @@
-﻿using KaizenTechCaseStudy.Dal.Abstract.UserService;
+﻿using KaizenTechCaseStudy.Dal.Abstract.BlogService;
 using KaizenTechCaseStudy.Dal.Manager.EntityFramework;
-using KaizenTechCaseStudy.Entities.UserEntities;
+using KaizenTechCaseStudy.Entities.BlogEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KaizenTechCaseStudy.Dal.Concrete.UserService
+namespace KaizenTechCaseStudy.Dal.Concrete.BlogService
 {
     //TODO Hepsini sp çevir
-
-    public class UserService : IUserService
+    public class BlogService : IBlogService
     {
-        public bool AddNewUser(Users user)
+        public bool AddNewBlog(Blogs blog)
         {
             using (var context = new DatabaseContext())
             {
                 try
                 {
-                    context.Users.Add(user);
+                    context.Blogs.Add(blog);
                     context.SaveChanges();
                     return true;
                 }
@@ -29,16 +28,16 @@ namespace KaizenTechCaseStudy.Dal.Concrete.UserService
             }
         }
 
-        public bool DeleteUser(int userId)
+        public bool DeleteBlog(int blogId)
         {
             using (var context = new DatabaseContext())
             {
                 try
                 {
-                    var user = context.Users.FirstOrDefault(u => u.Id == userId);
-                    if(user != null)
+                    var blog = context.Blogs.FirstOrDefault(b => b.Id == blogId);
+                    if (blog != null)
                     {
-                        context.Users.Remove(user);
+                        context.Blogs.Remove(blog);
                         context.SaveChanges();
                         return true;
                     }
@@ -53,14 +52,14 @@ namespace KaizenTechCaseStudy.Dal.Concrete.UserService
             }
         }
 
-        public Users GetUserById(int userId)
+        public Blogs GetBlogById(int blogId)
         {
             using (var context = new DatabaseContext())
             {
                 try
                 {
-                    var user = context.Users.FirstOrDefault(u => u.Id == userId);
-                    return user;
+                    var blog = context.Blogs.FirstOrDefault(b => b.Id == blogId);
+                    return blog;
                 }
                 catch (Exception ex)
                 {
@@ -70,14 +69,14 @@ namespace KaizenTechCaseStudy.Dal.Concrete.UserService
             }
         }
 
-        public List<Users> GetUserList()
+        public List<Blogs> GetBlogList()
         {
             using (var context = new DatabaseContext())
             {
                 try
                 {
-                    var userList = context.Users.Where(u => !u.Deleted).ToList();
-                    return userList;
+                    var blogList = context.Blogs.Where(b => !b.Deleted).ToList();
+                    return blogList;
                 }
                 catch (Exception ex)
                 {
@@ -87,17 +86,17 @@ namespace KaizenTechCaseStudy.Dal.Concrete.UserService
             }
         }
 
-        public bool UpdateUser(Users user)
+        public bool UpdateBlog(Blogs blog)
         {
             using (var context = new DatabaseContext())
             {
                 try
                 {
-                    var foundUser = context.Users.Where(u => u.Id == user.Id).FirstOrDefault();
-                    if(foundUser != null)
+                    var foundBlog = context.Blogs.Where(b => b.Id == blog.Id).FirstOrDefault();
+                    if (foundBlog != null)
                     {
-                        foundUser = user;
-                        context.Users.Update(foundUser);
+                        foundBlog = blog;
+                        context.Blogs.Update(foundBlog);
                         context.SaveChanges();
                         return true;
                     }

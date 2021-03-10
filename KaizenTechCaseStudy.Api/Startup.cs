@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KaizenTechCaseStudy.Dal.Abstract.BlogService;
 using KaizenTechCaseStudy.Dal.Abstract.UserService;
+using KaizenTechCaseStudy.Dal.Concrete.BlogService;
 using KaizenTechCaseStudy.Dal.Concrete.UserService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +33,7 @@ namespace KaizenTechCaseStudy.Api
             #region Dependency Injection
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBlogService, BlogService>();
 
             #endregion
         }

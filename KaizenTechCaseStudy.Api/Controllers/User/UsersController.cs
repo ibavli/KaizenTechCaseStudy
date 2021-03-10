@@ -94,13 +94,6 @@ namespace KaizenTechCaseStudy.Api.Controllers.User
         [HttpGet("getuserlist")]
         public IActionResult GetUserList()
         {
-            #region Check if the model is valid.
-
-            if (!ModelState.IsValid)
-                return BadRequest(new { message = _invalidMessage });
-
-            #endregion
-
             var userList = _userService.GetUserList();
 
             if (userList != null)

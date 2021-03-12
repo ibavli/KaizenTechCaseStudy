@@ -19,14 +19,50 @@ namespace KaizenTechCaseStudy.Dal.Concrete.UserService
                 try
                 {
                     context.Users.Add(user);
+                    context.SaveChanges();
+
+                    var savedUser = context.Users.FirstOrDefault(u => u.Username == user.Username);
 
                     userPassword.Salt = GenerateSalt();
                     var mixedPassword = MixPasswordAndSalt(password: userPassword.Password, salt: userPassword.Salt);
                     userPassword.Password = PasswordCrypto(mixedPassword: mixedPassword);
+                    userPassword.UserId = savedUser.Id;
 
                     context.UserPassword.Add(userPassword);
                     context.SaveChanges();
                     return true;
+                }
+                catch (Exception ex)
+                {
+                    //TODO Loglama
+                    return false;
+                }
+            }
+        }
+
+        public bool CheckUserByPassword(string username, string password)
+        {
+            using (var context = new DatabaseContext())
+            {
+                try
+                {
+                    var user = context.Users.FirstOrDefault(u => u.Username == username);
+                    if (user != null)
+                    {
+                        var userpassword = context.UserPassword.FirstOrDefault(u => u.UserId == user.Id);
+                        if(userpassword != null)
+                        {
+                            var mixedPassword = MixPasswordAndSalt(password: password, salt: userpassword.Salt);
+                            var finalPassword = PasswordCrypto(mixedPassword: mixedPassword);
+                            return finalPassword == userpassword.Password;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+
+                    return false;
                 }
                 catch (Exception ex)
                 {
@@ -45,7 +81,7 @@ namespace KaizenTechCaseStudy.Dal.Concrete.UserService
                     var user = context.Users.FirstOrDefault(u => u.Id == userId);
                     if(user != null)
                     {
-                        user.Deleted = false;
+                        user.Deleted = true;
                         context.Users.Update(user);
                         context.SaveChanges();
                         return true;
@@ -104,7 +140,11 @@ namespace KaizenTechCaseStudy.Dal.Concrete.UserService
                     var foundUser = context.Users.FirstOrDefault(u => u.Id == user.Id);
                     if(foundUser != null)
                     {
-                        foundUser = user;
+                        //TODO Mapping yapılabilir
+                        foundUser.Name = user.Name;
+                        foundUser.Surname = user.Surname;
+                        foundUser.Email = user.Email;
+                        foundUser.Username = user.Username;
                         context.Users.Update(foundUser);
 
                         var foundUserPassword = context.UserPassword.FirstOrDefault(u => u.UserId == userPassword.UserId);

@@ -14,5 +14,7 @@ namespace KaizenTechCaseStudy.Dal.Abstract.UserService
         Users GetUserById(int userId);
 
         List<Users> GetUserList();
+
+        bool CheckUserByPassword(string username, string password);
     }
 }

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using KaizenTechCaseStudy.Api.UIModels.BlogModels;
+﻿using KaizenTechCaseStudy.Api.UIModels.BlogModels;
 using KaizenTechCaseStudy.Dal.Abstract.BlogService;
 using KaizenTechCaseStudy.Entities.BlogEntities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KaizenTechCaseStudy.Api.Controllers.Blog
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class BlogsController : Controller
@@ -22,7 +20,6 @@ namespace KaizenTechCaseStudy.Api.Controllers.Blog
         {
             _blogService = blogService;
         }
-
 
         [HttpPost("addnewblog")]
         public IActionResult AddNewBlog([FromBody]AddNewBlogUIModel model)
@@ -59,7 +56,7 @@ namespace KaizenTechCaseStudy.Api.Controllers.Blog
 
             #endregion
 
-            bool result = _blogService.DeleteBlog(blogId: model.BlogId);
+            bool result = _blogService.DeleteBlog(blogId: model.Id);
 
             if (result)
                 return Ok();
@@ -77,7 +74,7 @@ namespace KaizenTechCaseStudy.Api.Controllers.Blog
 
             #endregion
 
-            var blog = _blogService.GetBlogById(blogId: model.BlogId);
+            var blog = _blogService.GetBlogById(blogId: model.Id);
 
             if (blog != null)
                 return Ok(blog);

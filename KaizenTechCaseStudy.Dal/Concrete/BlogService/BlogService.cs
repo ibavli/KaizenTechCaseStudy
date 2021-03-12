@@ -37,7 +37,7 @@ namespace KaizenTechCaseStudy.Dal.Concrete.BlogService
                     var blog = context.Blogs.FirstOrDefault(b => b.Id == blogId);
                     if (blog != null)
                     {
-                        context.Blogs.Remove(blog);
+                        blog.Deleted = true;
                         context.SaveChanges();
                         return true;
                     }
@@ -95,7 +95,8 @@ namespace KaizenTechCaseStudy.Dal.Concrete.BlogService
                     var foundBlog = context.Blogs.Where(b => b.Id == blog.Id).FirstOrDefault();
                     if (foundBlog != null)
                     {
-                        foundBlog = blog;
+                        foundBlog.BlogTitle = blog.BlogTitle;
+                        foundBlog.BlogDescription = blog.BlogDescription;
                         context.Blogs.Update(foundBlog);
                         context.SaveChanges();
                         return true;

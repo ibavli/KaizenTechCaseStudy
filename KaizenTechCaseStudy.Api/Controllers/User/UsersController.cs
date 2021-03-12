@@ -19,7 +19,6 @@ namespace KaizenTechCaseStudy.Api.Controllers.User
             _userService = userService;
         }
 
-        
         [HttpPost("addnewuser")]
         public IActionResult AddNewUser([FromBody]AddNewUserUIModel model)
         {

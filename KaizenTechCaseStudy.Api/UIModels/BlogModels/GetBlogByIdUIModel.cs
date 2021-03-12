@@ -5,6 +5,6 @@ namespace KaizenTechCaseStudy.Api.UIModels.BlogModels
     public class GetBlogByIdUIModel
     {
         [Required]
-        public int BlogId { get; set; }
+        public int Id { get; set; }
     }
 }

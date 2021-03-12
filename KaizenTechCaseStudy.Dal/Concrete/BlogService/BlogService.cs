@@ -1,8 +1,10 @@
 ﻿using KaizenTechCaseStudy.Dal.Abstract.BlogService;
 using KaizenTechCaseStudy.Dal.Manager.EntityFramework;
 using KaizenTechCaseStudy.Entities.BlogEntities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace KaizenTechCaseStudy.Dal.Concrete.BlogService
@@ -16,8 +18,11 @@ namespace KaizenTechCaseStudy.Dal.Concrete.BlogService
             {
                 try
                 {
-                    context.Blogs.Add(blog);
-                    context.SaveChanges();
+                    SqlParameter pDeleted = new SqlParameter("@Deleted", false);
+                    SqlParameter pCreatedDate = new SqlParameter("@CreatedDate", DateTime.Now);
+                    SqlParameter pBlogTitle = new SqlParameter("@BlogTitle", blog.BlogTitle);
+                    SqlParameter pBlogDescription = new SqlParameter("@BlogDescription", blog.BlogDescription);
+                    context.Database.ExecuteSqlCommand("CP_CreateBlog @Deleted, @CreatedDate, @BlogTitle, @BlogDescription", pDeleted, pCreatedDate, pBlogTitle, pBlogDescription);
                     return true;
                 }
                 catch (Exception ex)

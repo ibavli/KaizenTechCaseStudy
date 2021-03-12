@@ -82,7 +82,6 @@ namespace KaizenTechCaseStudy.Api.Controllers.Blog
                 return NotFound();
         }
 
-        //TODO Filtre için model ekle
         [HttpPost("getbloglist")]
         public IActionResult GetBlogList([FromBody]GetBlogsFilterUIModel model)
         {

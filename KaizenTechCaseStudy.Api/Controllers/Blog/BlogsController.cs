@@ -83,10 +83,10 @@ namespace KaizenTechCaseStudy.Api.Controllers.Blog
         }
 
         //TODO Filtre için model ekle
-        [HttpGet("getbloglist")]
-        public IActionResult GetBlogList()
+        [HttpPost("getbloglist")]
+        public IActionResult GetBlogList([FromBody]GetBlogsFilterUIModel model)
         {
-            var blogList = _blogService.GetBlogList();
+            var blogList = _blogService.GetBlogList(title: model.Title, description: model.Description);
 
             if (blogList != null)
                 return Ok(blogList);

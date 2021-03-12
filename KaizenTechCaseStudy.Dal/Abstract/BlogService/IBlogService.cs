@@ -13,6 +13,6 @@ namespace KaizenTechCaseStudy.Dal.Abstract.BlogService
 
         Blogs GetBlogById(int blogId);
 
-        List<Blogs> GetBlogList();
+        List<Blogs> GetBlogList(string title = null, string description = null);
     }
 }

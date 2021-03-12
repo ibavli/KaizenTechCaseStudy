@@ -69,13 +69,16 @@ namespace KaizenTechCaseStudy.Dal.Concrete.BlogService
             }
         }
 
-        public List<Blogs> GetBlogList()
+        public List<Blogs> GetBlogList(string title = null, string description = null)
         {
             using (var context = new DatabaseContext())
             {
                 try
                 {
-                    var blogList = context.Blogs.Where(b => !b.Deleted).ToList();
+                    // Ortak filtreleme isteniyorsa && koşulu || çevrilebilir
+                    var blogList = context.Blogs.Where(b => !b.Deleted &&
+                    (title == null || b.BlogTitle.Contains(title)) &&
+                    (description == null || b.BlogDescription.Contains(description))).ToList();
                     return blogList;
                 }
                 catch (Exception ex)
